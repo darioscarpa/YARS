@@ -4,11 +4,10 @@
 #include "../../ShaderHandling.h"
 #include "../../Renderable.h"
 
-//#include "../gdlBuffer.h"
 #include "../aoBuffer.h"
 #include "../gBuffer.h"
 
-#include "../SaAoRenderer.h"
+#include "../def_saao/SaAoRenderer.h"
 
 #include "sub/RandomGeneratorShaderSub.h"
 #include "sub/D2DilShaderSub.h"
@@ -98,13 +97,6 @@ public:
 
 		// TEXTURE SAMPLERS
 		textureSamplers.resize(TEX_SIZE);
-		/*setTextureSampler(TEX_ALBEDO,   "albedoSampler",      GdlBuffer::GDLBUFFER_TEXTURE_TYPE_ALBEDO);
-		setTextureSampler(TEX_DIRLIGHT, "directLightTexData", GdlBuffer::GDLBUFFER_TEXTURE_TYPE_DIRECTLIGHT);
-		setTextureSampler(TEX_NORMAL,   "normalSampler",      GdlBuffer::GDLBUFFER_TEXTURE_TYPE_NORMAL);
-		setTextureSampler(TEX_DEPTH,    "depthSampler",       GdlBuffer::GDLBUFFER_TEXTURE_TYPE_DEPTH);*/
-
-		//setTextureSampler(TEX_ALBEDO,   "diffuseSampler",  GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-		//setTextureSampler(TEX_DIRLIGHT, "specularSampler", GBuffer::GBUFFER_TEXTURE_TYPE_SPECULAR);				
 		setTextureSampler(TEX_NORMAL,   "normalSampler",   GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
 		setTextureSampler(TEX_DEPTH,    "depthSampler",    GBuffer::GBUFFER_TEXTURE_TYPE_DEPTH);
 		
@@ -113,24 +105,7 @@ public:
 		uniformLocs[mousePos]          = glGetUniformLocation(getId(), "mousePos");
 		uniformLocs[rayOrigin]         = glGetUniformLocation(getId(), "rayOrigin");
 
-		/*
-		uniformLocs[ambientLightLevel] = glGetUniformLocation(getId(), "ambientLightLevel");
-		uniformLocs[albedoEnabled]         = glGetUniformLocation(getId(), "albedoEnabled");
-		uniformLocs[aoEnabled]             = glGetUniformLocation(getId(), "aoEnabled");
-		uniformLocs[ilEnabled]             = glGetUniformLocation(getId(), "ilEnabled");
-		uniformLocs[ambientLightEnabled]   = glGetUniformLocation(getId(), "ambientLightEnabled");
-		uniformLocs[directLightEnabled]    = glGetUniformLocation(getId(), "directLightEnabled");
-		uniformLocs[doEnabled]             = glGetUniformLocation(getId(), "doEnabled");
-
-
-		uniformLocs[showAreas]            = glGetUniformLocation(getId(), "showAreas");
-		uniformLocs[showSampling]         = glGetUniformLocation(getId(), "showSampling");
-		uniformLocs[showSamplingDensity]  = glGetUniformLocation(getId(), "showSamplingDensity");
-		uniformLocs[showZoomedArea]       = glGetUniformLocation(getId(), "showZoomedArea");
-		*/
-
 		uniformLocs[aoMultiplier]         = glGetUniformLocation(getId(), "aoMultiplier");
-		//uniformLocs[ilMultiplier]         = glGetUniformLocation(getId(), "ilMultiplier");
 		uniformLocs[areaMultiplier]       = glGetUniformLocation(getId(), "areaMultiplier");
 		uniformLocs[solidAngleMultiplier] = glGetUniformLocation(getId(), "solidAngleMultiplier");
 
@@ -183,31 +158,11 @@ public:
 	inline void setAlchemyK(float v)   { setFloatUniform(alchemy_k,   v); };
 	inline void setAlchemyU(float v)   { setFloatUniform(alchemy_u,   v); };
 
-
-	/*
-	inline void setAmbientLightLevel(float level) { setFloatUniform(ambientLightLevel, level); };
-
-	inline void setAlbedoEnabled(bool enabled)    { setBoolUniform(albedoEnabled, enabled); };
-	inline void setAoEnabled(bool enabled)        { setBoolUniform(aoEnabled, enabled);     };
-	inline void setDoEnabled(bool enabled)        { setBoolUniform(doEnabled, enabled);     };
-
-	inline void setIlEnabled(bool enabled)        { setBoolUniform(ilEnabled, enabled);     };
-	inline void setAmbientEnabled(bool enabled)   { setBoolUniform(ambientLightEnabled, enabled);  };
-	inline void setDirectEnabled(bool enabled)    { setBoolUniform(directLightEnabled, enabled);  };
-	*/
-
-
 	//inline void setRandomGenerator(RandomGeneratorShaderSub::OptionValues randomGen) { setFragmentSubroutine(randomGenerator, randomGen); }
 	inline void setSamplingPattern(SamplingPatternShaderSub::OptionValues samplingP) { setFragmentSubroutine(samplingPattern, samplingP); }
 	inline void setIlCalculation(D2DilShaderSub::OptionValues ilid) { setFragmentSubroutine(ilCalculation, ilid); }
 	inline void setAoCalculation(D2DaoShaderSub::OptionValues aoid) { setFragmentSubroutine(aoCalculation, aoid); }
 
-	/*
-	inline void setShowAreas(bool enabled)  { setBoolUniform(showAreas, enabled); };
-	inline void setShowSampling(bool enabled)  { setBoolUniform(showSampling, enabled); };
-	inline void setShowSamplingDensity(bool enabled)  { setBoolUniform(showSamplingDensity, enabled); };
-	inline void setShowZoomedArea(bool enabled)  { setBoolUniform(showZoomedArea, enabled); };
-	*/
 
 	inline void setSampleKernel(const std::vector<glm::vec3>& kernel) {
 		glUniform3fv(uniformLocs[uKernelOffsets],    kernel.size(), reinterpret_cast<const GLfloat*>(&kernel[0]));

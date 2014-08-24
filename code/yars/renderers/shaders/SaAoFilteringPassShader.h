@@ -3,7 +3,6 @@
 
 #include "../../ShaderHandling.h"
 
-//#include "../gdlBuffer.h"
 #include "../gBuffer.h"
 #include "../aoBuffer.h"
 

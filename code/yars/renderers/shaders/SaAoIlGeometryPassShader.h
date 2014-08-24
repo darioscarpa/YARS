@@ -1,7 +1,7 @@
 #ifndef SAAOILGEOMETRYPASSSHADER_H
 #define SAAOILGEOMETRYPASSSHADER_H
 
-#include "../SaAoIlGbuffer.h"
+#include "../def_saaoil/SaAoIlGbuffer.h"
 
 #include "../../ShaderHandling.h"
 #include "../../Renderable.h"

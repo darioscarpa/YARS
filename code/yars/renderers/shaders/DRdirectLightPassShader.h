@@ -2,7 +2,7 @@
 #define DRDIRECTLIGHTPASSSHADER_H
 
 #include "../gBuffer.h"
-#include "../DlBuffer.h"
+#include "../deferred/DlBuffer.h"
 
 class DRdirectLightPassShader : public GfxShaderProgram {
 	

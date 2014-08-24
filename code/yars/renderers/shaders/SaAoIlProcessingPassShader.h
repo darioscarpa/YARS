@@ -4,7 +4,7 @@
 #include "../../ShaderHandling.h"
 #include "../../Renderable.h"
 
-#include "../gdlBuffer.h"
+#include "../def_saaoil/gdlBuffer.h"
 #include "../aoBuffer.h"
 
 #include "sub/RandomGeneratorShaderSub.h"
@@ -28,13 +28,6 @@ public:
 		ilMultiplier,
 		areaMultiplier,
 		solidAngleMultiplier,
-
-		/*
-		showAreas,
-		showSampling,
-		showSamplingDensity,
-		showZoomedArea,
-		*/
 
 		alchemy_k,
 		alchemy_ro,
@@ -105,29 +98,12 @@ public:
 		uniformLocs.resize(UniformLocId::SIZE);
 		uniformLocs[mousePos]          = glGetUniformLocation(getId(), "mousePos");
 		uniformLocs[rayOrigin]         = glGetUniformLocation(getId(), "rayOrigin");
-
-		/*
-		uniformLocs[ambientLightLevel] = glGetUniformLocation(getId(), "ambientLightLevel");
-		uniformLocs[albedoEnabled]         = glGetUniformLocation(getId(), "albedoEnabled");
-		uniformLocs[aoEnabled]             = glGetUniformLocation(getId(), "aoEnabled");
-		uniformLocs[ilEnabled]             = glGetUniformLocation(getId(), "ilEnabled");
-		uniformLocs[ambientLightEnabled]   = glGetUniformLocation(getId(), "ambientLightEnabled");
-		uniformLocs[directLightEnabled]    = glGetUniformLocation(getId(), "directLightEnabled");
-		uniformLocs[doEnabled]             = glGetUniformLocation(getId(), "doEnabled");
-
-
-		uniformLocs[showAreas]            = glGetUniformLocation(getId(), "showAreas");
-		uniformLocs[showSampling]         = glGetUniformLocation(getId(), "showSampling");
-		uniformLocs[showSamplingDensity]  = glGetUniformLocation(getId(), "showSamplingDensity");
-		uniformLocs[showZoomedArea]       = glGetUniformLocation(getId(), "showZoomedArea");
-		*/
-
+		
 		uniformLocs[aoMultiplier]         = glGetUniformLocation(getId(), "aoMultiplier");
 		uniformLocs[ilMultiplier]         = glGetUniformLocation(getId(), "ilMultiplier");
 		uniformLocs[areaMultiplier]       = glGetUniformLocation(getId(), "areaMultiplier");
 		uniformLocs[solidAngleMultiplier] = glGetUniformLocation(getId(), "solidAngleMultiplier");
-
-
+		
 		uniformLocs[diskDisplacement]  = glGetUniformLocation(getId(), "diskDisplacement");
 		uniformLocs[distMax]           = glGetUniformLocation(getId(), "distMax");
 		uniformLocs[radLength]         = glGetUniformLocation(getId(), "radLength");
@@ -174,31 +150,12 @@ public:
 	inline void setAlchemyRO(float v)  { setFloatUniform(alchemy_ro,  v); };
 	inline void setAlchemyK(float v)   { setFloatUniform(alchemy_k,   v); };
 	inline void setAlchemyU(float v)   { setFloatUniform(alchemy_u,   v); };
-
-	/*
-	inline void setAmbientLightLevel(float level) { setFloatUniform(ambientLightLevel, level); };
-
-	inline void setAlbedoEnabled(bool enabled)    { setBoolUniform(albedoEnabled, enabled); };
-	inline void setAoEnabled(bool enabled)        { setBoolUniform(aoEnabled, enabled);     };
-	inline void setDoEnabled(bool enabled)        { setBoolUniform(doEnabled, enabled);     };
-
-	inline void setIlEnabled(bool enabled)        { setBoolUniform(ilEnabled, enabled);     };
-	inline void setAmbientEnabled(bool enabled)   { setBoolUniform(ambientLightEnabled, enabled);  };
-	inline void setDirectEnabled(bool enabled)    { setBoolUniform(directLightEnabled, enabled);  };
-	*/
-
-
+	
 	//inline void setRandomGenerator(RandomGeneratorShaderSub::OptionValues randomGen) { setFragmentSubroutine(randomGenerator, randomGen); }
 	inline void setSamplingPattern(SamplingPatternShaderSub::OptionValues samplingP) { setFragmentSubroutine(samplingPattern, samplingP); }
 	inline void setIlCalculation(D2DilShaderSub::OptionValues ilid) { setFragmentSubroutine(ilCalculation, ilid); }
 	inline void setAoCalculation(D2DaoShaderSub::OptionValues aoid) { setFragmentSubroutine(aoCalculation, aoid); }
 
-	/*
-	inline void setShowAreas(bool enabled)  { setBoolUniform(showAreas, enabled); };
-	inline void setShowSampling(bool enabled)  { setBoolUniform(showSampling, enabled); };
-	inline void setShowSamplingDensity(bool enabled)  { setBoolUniform(showSamplingDensity, enabled); };
-	inline void setShowZoomedArea(bool enabled)  { setBoolUniform(showZoomedArea, enabled); };
-	*/
 
 	inline void setSampleKernel(const std::vector<glm::vec3>& kernel) {
 		glUniform3fv(uniformLocs[uKernelOffsets],    kernel.size(), reinterpret_cast<const GLfloat*>(&kernel[0]));

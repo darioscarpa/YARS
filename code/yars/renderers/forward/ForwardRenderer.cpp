@@ -1,13 +1,13 @@
 #include "ForwardRenderer.h"
 
-#include "shaders/ForwardShader.h"
-#include "shaders/ForwardShaderFlat.h"
+#include "../shaders/ForwardShader.h"
+#include "../shaders/ForwardShaderFlat.h"
 //#include "CameraNode.h"
 
-#include "../util/vsGLInfoLib.h"
+#include "../../util/vsGLInfoLib.h"
 
 // MATH
-#include "../util/inc_math.h" 
+#include "../../util/inc_math.h" 
 
 ////////////////////////////////////////////////////////////////////////////
 

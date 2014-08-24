@@ -1,10 +1,10 @@
 #include "Sandbox.h"
 
-#include "renderers/DeferredRenderer.h"
-#include "renderers/ForwardRenderer.h"
-#include "renderers/DoublePassBlendingDeferredRenderer.h"
-#include "renderers/SaAoRenderer.h"
-#include "renderers/SaAoIlRenderer.h"
+#include "renderers/deferred/DeferredRenderer.h"
+#include "renderers/forward/ForwardRenderer.h"
+#include "renderers/deferred/DoublePassBlendingDeferredRenderer.h"
+#include "renderers/def_saao/SaAoRenderer.h"
+#include "renderers/def_saaoil/SaAoIlRenderer.h"
 
 #include "scenes/SceneSponza.h"
 #include "scenes/SceneRubik.h"

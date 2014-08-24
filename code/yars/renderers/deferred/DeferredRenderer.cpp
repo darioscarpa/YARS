@@ -1,21 +1,21 @@
 #include "DeferredRenderer.h"
 
-#include "shaders/DRgeometryPassShader.h"
-#include "shaders/DRlightPassShader.h"
-#include "shaders/DRlightPassShaderPointLight.h"
-#include "shaders/DRlightPassShaderSpotLight.h"
-#include "shaders/DRlightPassShaderDirLight.h"
-#include "shaders/DRindirectLightPassShader.h"
-#include "shaders/DRsamplingTestPasssShader.h"
-#include "shaders/DRdiscDSSAOshader.h"
+#include "../shaders/DRgeometryPassShader.h"
+#include "../shaders/DRlightPassShader.h"
+#include "../shaders/DRlightPassShaderPointLight.h"
+#include "../shaders/DRlightPassShaderSpotLight.h"
+#include "../shaders/DRlightPassShaderDirLight.h"
+#include "../shaders/DRindirectLightPassShader.h"
+#include "../shaders/DRsamplingTestPasssShader.h"
+#include "../shaders/DRdiscDSSAOshader.h"
 
-#include "FullScreenQuad.h"
-#include "../Texture.h"
-#include "../Sandbox.h"
+#include "../FullScreenQuad.h"
+#include "../../Texture.h"
+#include "../../Sandbox.h"
 
-#include "../util/vsGLInfoLib.h"
+#include "../../util/vsGLInfoLib.h"
 
-#include "../util/inc_math.h"
+#include "../../util/inc_math.h"
 
 const float DEFAULT_DISKDISPLACEMENT = 0.2f;
 const float DEFAULT_DISTMAX = 1.5f;

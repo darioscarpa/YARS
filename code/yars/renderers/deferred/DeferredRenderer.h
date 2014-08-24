@@ -1,19 +1,19 @@
 #ifndef DEFERREDRENDERER_H
 #define DEFERREDRENDERER_H
 
-#include "gBuffer.h"
-#include "MrtBuffer.h"
+#include "../gBuffer.h"
+#include "../MrtBuffer.h"
 
-#include "../Renderer.h"
-#include "../ShaderHandling.h"
+#include "../../Renderer.h"
+#include "../../ShaderHandling.h"
 
-#include "shaders/sub/RandomGeneratorShaderSub.h"
-#include "shaders/sub/SamplingPatternShaderSub.h"
-#include "shaders/sub/D2DaoShaderSub.h"
-#include "shaders/sub/D2DilShaderSub.h"
-#include "shaders/sub/AreaCalculatorShaderSub.h"
+#include "../shaders/sub/RandomGeneratorShaderSub.h"
+#include "../shaders/sub/SamplingPatternShaderSub.h"
+#include "../shaders/sub/D2DaoShaderSub.h"
+#include "../shaders/sub/D2DilShaderSub.h"
+#include "../shaders/sub/AreaCalculatorShaderSub.h"
 
-#include "HemisphereSampling.h"
+#include "../HemisphereSampling.h"
 
 class DRgeometryPassShader;
 

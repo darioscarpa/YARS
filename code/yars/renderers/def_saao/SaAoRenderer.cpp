@@ -1,13 +1,14 @@
-#include "SaAoIlRenderer.h"
+#include "SaAoRenderer.h"
 
-#include "HemisphereSampling.h"
-#include "FullScreenQuad.h"
+#include "../HemisphereSampling.h"
+#include "../FullScreenQuad.h"
 
-#include "../Sandbox.h"
+#include "../../Sandbox.h"
 
-#include "../util/vsGLInfoLib.h"
+#include "../../util/vsGLInfoLib.h"
 
-#include "../util/inc_math.h"
+#include "../../util/inc_math.h"
+
 
 const float DEFAULT_ANGLEBIAS = 0.5f;
 const float DEFAULT_MAXDIST   = 1.0f;
@@ -15,26 +16,26 @@ const float DEFAULT_SAMPLINGRADIUS = 0.5f;
 const float DEFAULT_NUMSAMPLES = 16;
 
 
-const char* SaAoIlRenderer::TRIANGLE_DIVS = "#TRIANGLE_DIVS#";
+const char* SaAoRenderer::TRIANGLE_DIVS = "#TRIANGLE_DIVS#";
 
-void SaAoIlRenderer::setTriangleSideDivs(int divs) {
+void SaAoRenderer::setTriangleSideDivs(int divs) {
 	std::ostringstream v; v << divs;
 	shadersCompileConstants[TRIANGLE_DIVS] = v.str();
 	reloadShaders();
 }
-int SaAoIlRenderer::getTriangleSideDivs() const {
+int SaAoRenderer::getTriangleSideDivs() const {
 	auto it = shadersCompileConstants.find(TRIANGLE_DIVS);
 	return std::stoi(it->second);
 }
 
 
-void SaAoIlRenderer::setUniformSamplingRadius(bool tf) {
+void SaAoRenderer::setUniformSamplingRadius(bool tf) {
 	bs_emisphereAllPointsOnSurface = tf;
 	//setupKernel(MAX_KERNEL_SIZE, tf, bs_octantInterleaving);
 	setHemisphereSamplingMode(getHemisphereSamplingMode());
 }
 
-void SaAoIlRenderer::setupEmisphereKernel_random(int kernelSize, bool allPointsOnEmishphereSurface, bool distanceFalloff) {
+void SaAoRenderer::setupEmisphereKernel_random(int kernelSize, bool allPointsOnEmishphereSurface, bool distanceFalloff) {
 	std::vector<glm::vec3> kernel;
 	kernel.reserve(kernelSize);
 
@@ -44,7 +45,7 @@ void SaAoIlRenderer::setupEmisphereKernel_random(int kernelSize, bool allPointsO
 	processingPassShader->setSampleKernel(kernel);
 }
 
-void SaAoIlRenderer::setupEmisphereKernel_triangleHierarchy(int kernelSize, bool allPointsOnEmishphereSurface, bool octantSampleInterleaving) {
+void SaAoRenderer::setupEmisphereKernel_triangleHierarchy(int kernelSize, bool allPointsOnEmishphereSurface, bool octantSampleInterleaving) {
 	const int nsquare = kernelSize/4;
 	const int n       = log(nsquare) / log(2);
 
@@ -66,7 +67,7 @@ void SaAoIlRenderer::setupEmisphereKernel_triangleHierarchy(int kernelSize, bool
 	///////////////////////////////////////////////////////////////////////////
 }
 
-void SaAoIlRenderer::setScreenSpaceRayOrigin() {
+void SaAoRenderer::setScreenSpaceRayOrigin() {
 	glm::vec2 newpos = Sandbox::getActiveScene()->getSpecialPoint();
 	if (screenSpaceRayOrigin != newpos && processingPassShader->isInitialized()) {
 		screenSpaceRayOrigin = newpos;
@@ -75,7 +76,7 @@ void SaAoIlRenderer::setScreenSpaceRayOrigin() {
 	}
 }
 
-void SaAoIlRenderer::setScreenSpaceEmisphereCenter() {
+void SaAoRenderer::setScreenSpaceEmisphereCenter() {
 	glm::vec2 newpos = Sandbox::getActiveScene()->getEmisphereCenterPoint();
 	if (screenSpaceEmisphereCenter != newpos && processingPassShader->isInitialized()) {
 		screenSpaceEmisphereCenter = newpos;
@@ -84,13 +85,13 @@ void SaAoIlRenderer::setScreenSpaceEmisphereCenter() {
 	}
 }
 
-SaAoIlRenderer::SaAoIlRenderer() : gBuffer(3, true), aoBuffer(1, false) {
-	setLabel("SaSSAO renderer (IL)");
+SaAoRenderer::SaAoRenderer() : gBuffer(3, true), aoBuffer(1, false) {
+	setLabel("SaSSAO renderer");
 
 	// make cppcheck happy
 	geometryPassShader   = nullptr;
-	processingPassShader   = nullptr;
-	filteringPassShader   = nullptr;
+	processingPassShader = nullptr;
+	filteringPassShader  = nullptr;
 
 	quad          = nullptr;
 
@@ -104,16 +105,31 @@ SaAoIlRenderer::SaAoIlRenderer() : gBuffer(3, true), aoBuffer(1, false) {
 	alchemy_u = 0.0001;
 }
 
-void SaAoIlRenderer::init(int awinW, int awinH) {
-	printf("initializing %s\n", getLabel().c_str());
-	winW = awinW;
-	winH = awinH;
-
+void SaAoRenderer::initMrtBuffers(int awinW, int awinH) {
 	gBuffer.init(winW, winH, 0);
 	gBuffer.printFramebufferInfo(GL_DRAW_FRAMEBUFFER);
 
-	aoBuffer.init(winW, winH, SaAoIlGBuffer::GBUFFER_TEXTURE_AVAILABLE, MrtBufferType::colora_rgba16_f);
+	aoBuffer.init(winW, winH, GBuffer::GBUFFER_TEXTURE_AVAILABLE, MrtBufferType::color_r8_b);
 	aoBuffer.printFramebufferInfo(GL_DRAW_FRAMEBUFFER);
+}
+
+void SaAoRenderer::initShaderPrograms() {
+	shadersCompileConstants["#TRIANGLE_DIVS#"] = "2";
+	
+	geometryPassShader   = new SaAoGeometryPassShader();
+	processingPassShader = new SaAoProcessingPassShader(shadersCompileConstants);
+	filteringPassShader  = new SaAoFilteringPassShader();
+}
+
+void SaAoRenderer::init(int awinW, int awinH) {
+	printf("initializing %s\n", getLabel().c_str());
+
+	winW = awinW;
+	winH = awinH;
+
+	initMrtBuffers(winW, winH);
+	initShaderPrograms();
+	ssd.init();
 
 	// when depth test enabled, accept fragment if closer to the camera than the former one
 	glDepthFunc(GL_LESS);
@@ -123,12 +139,7 @@ void SaAoIlRenderer::init(int awinW, int awinH) {
 	// disable blending
 	glDisable(GL_BLEND);
 
-	shadersCompileConstants["#TRIANGLE_DIVS#"] = "2";
-	ssd.init();
 
-	geometryPassShader = new SaAoIlGeometryPassShader();
-	processingPassShader = new SaAoIlProcessingPassShader(shadersCompileConstants);
-	filteringPassShader = new SaAoIlFilteringPassShader();
 
 	VSGLInfoLib::getCurrentTextureInfo();
 
@@ -154,7 +165,6 @@ void SaAoIlRenderer::init(int awinW, int awinH) {
 	setAoNumSamples(DEFAULT_NUMSAMPLES);
 
 	setAoMultiplier(1.0f);
-	setIlMultiplier(1.0f);
 	setAreaMultiplier(1.0f);
 	setSolidAngleMultiplier(1.0f);
 
@@ -162,22 +172,19 @@ void SaAoIlRenderer::init(int awinW, int awinH) {
 	setAlchemyRO(1.0);
 	setAlchemyU(0.0001);
 
-	
 	setSamplingPatternId(SamplingPatternShaderSub::emisphere);
 	setHemisphereSamplingMode(HemisphereSampling::HEMISPHERE_RANDOM);
 	setUniformSamplingRadius(false);
 
-	setTechnique(SaAoIlProcessingPassShader::SASSAO);
-	
-	
-	setAoComputationId(D2DaoShaderSub::dssao);
-	setIlComputationId(D2DilShaderSub::dssao);
+	setTechnique(SaAoProcessingPassShader::SASSAO);
 
+	
+	setAoComputationId(D2DaoShaderSub::dssao);	
 	setAreaComputationId(AreaCalculatorShaderSub::circumscribedCircleArea);
+
 
 	setAlbedoEnabled(true);
 	setAoEnabled(true);
-	setIlEnabled(true);
 	setAmbientEnabled(true);
 	setDirectEnabled(true);
 
@@ -192,7 +199,7 @@ void SaAoIlRenderer::init(int awinW, int awinH) {
 	reshape(awinW, awinH);
 }
 
-void SaAoIlRenderer::destroy() {
+void SaAoRenderer::destroy() {
 	if (geometryPassShader) delete geometryPassShader;
 	if (processingPassShader) delete processingPassShader;
 	if (filteringPassShader) delete filteringPassShader;
@@ -201,14 +208,18 @@ void SaAoIlRenderer::destroy() {
 	ssd.destroy();
 }
 
-void SaAoIlRenderer::reloadShaders() {
+void SaAoRenderer::reloadShaders() {
 	if (geometryPassShader) delete geometryPassShader;
 	if (processingPassShader) delete processingPassShader;
 	if (filteringPassShader) delete filteringPassShader;
 
-	geometryPassShader = new SaAoIlGeometryPassShader();
-	processingPassShader = new SaAoIlProcessingPassShader(shadersCompileConstants);
-	filteringPassShader = new SaAoIlFilteringPassShader();
+	/*
+	geometryPassShader = new SaAoGeometryPassShader();
+	processingPassShader = new SaAoProcessingPassShader(shadersCompileConstants);
+	filteringPassShader = new SaAoFilteringPassShader();
+	*/
+
+	initShaderPrograms();
 
 	VSGLInfoLib::getUniformsInfo(processingPassShader->getId());
 
@@ -237,7 +248,6 @@ void SaAoIlRenderer::reloadShaders() {
 	setSamplingPatternId(getSamplingPatternId());
 
 	setAoMultiplier(getAoMultiplier());
-	setIlMultiplier(getIlMultiplier());
 	setAreaMultiplier(getAreaMultiplier());
 	setSolidAngleMultiplier(getSolidAngleMultiplier());
 
@@ -245,12 +255,11 @@ void SaAoIlRenderer::reloadShaders() {
 
 	setAlbedoEnabled(isAlbedoEnabled());
 	setAoEnabled(isAoEnabled());
-	setIlEnabled(isIlEnabled());
+	
 	setAmbientEnabled(isAmbientEnabled());
 	setDirectEnabled(isDirectEnabled());
 
-	setAoComputationId(getAoComputationId());
-	setIlComputationId(getIlComputationId());
+	setAoComputationId(getAoComputationId());	
 	setAreaComputationId(getAreaComputationId());
 
 	setBlurEnabled(isBlurEnabled());
@@ -258,18 +267,23 @@ void SaAoIlRenderer::reloadShaders() {
 	setBlurKnormal(getBlurKnormal());
 	setBlurKernelSize(getBlurKernelSize());
 
+	setAlchemyK(getAlchemyK());
+	setAlchemyRO(getAlchemyRO());
+	setAlchemyU(getAlchemyU());
+
+	setTechnique(getTechnique());
+
 	reshape(winW, winH);
 }
 
-void SaAoIlRenderer::reinit() {
+void SaAoRenderer::reinit() {
 
 	bool _showingSampling  = showingSampling;
 	bool _showingSamplingDensity = showingSamplingDensity;
 	bool _showingArea      = showingArea;
 	bool _showingGBuffer = showingGBuffer;
 	bool _showingZoomedArea = showingZoomedArea;
-	int  _bsSamples        = aoNumSamples;
-
+	
 	SamplingPatternShaderSub::OptionValues _samplingPatternId  = getSamplingPatternId();
 
 	screenSpaceRayOrigin = glm::vec2(0,0);
@@ -284,70 +298,66 @@ void SaAoIlRenderer::reinit() {
 	setShowingSampling(_showingSampling);
 	setShowingSamplingDensity(_showingSamplingDensity);
 	setShowingZoomedArea(_showingZoomedArea);
-	*/
 
-	setAoSamplingRadius(getAoSamplingRadius());
-	setAoAngleBias(getAoSamplingRadius());
-	setAoMaxDistance(getAoMaxDistance());
-	setAoNumSamples(getAoNumSamples());
-
-	setAoMultiplier(getAoMultiplier());
-	setIlMultiplier(getIlMultiplier());
-	setAreaMultiplier(getAreaMultiplier());
-
-	setHemisphereSamplingMode(getHemisphereSamplingMode());
-
-	setAreaComputationId(getAreaComputationId());
-	setSamplingPatternId(_samplingPatternId);
-
+	
 	setScreenSpaceRayOrigin();
 	setScreenSpaceEmisphereCenter();
+	*/
 
+	setAoMaxDistance(getAoMaxDistance());
+	setAoAngleBias(getAoAngleBias());
+	setAoNumSamples(getAoNumSamples());
+	setAoMultiplier(getAoMultiplier());
+	
+	setAreaComputationId(getAreaComputationId());	
+	setAreaMultiplier(getAreaMultiplier());
+
+	setSamplingPatternId(_samplingPatternId);
+	setHemisphereSamplingMode(getHemisphereSamplingMode());
+	
 	setBlurEnabled(isBlurEnabled());
 	setBlurKdepth(getBlurKdepth());
 	setBlurKnormal(getBlurKnormal());
 	setBlurKernelSize(getBlurKernelSize());
 };
 
-////////////////////////////////////////////////////////////////////////////
-
-void SaAoIlRenderer::setTechnique(SaAoIlProcessingPassShader::Technique_t t) {
+void SaAoRenderer::setTechnique(SaAoProcessingPassShader::Technique_t t) {
 	m_technique = t;
 	processingPassShader->use();
 	processingPassShader->setTechnique(t);	
-	if (t==SaAoIlProcessingPassShader::SASSAO) {
+	if (t==SaAoProcessingPassShader::SASSAO) {
 		setSamplingPatternId(SamplingPatternShaderSub::emisphere);
 	} else {
 		setSamplingPatternId(SamplingPatternShaderSub::flat);
 	}
 }
+////////////////////////////////////////////////////////////////////////////
 
-//void SaAoIlRenderer::setColorBufferType(MrtBufferType t) {
-void SaAoIlRenderer::setGbColorBufferType(MrtBufferType::OptionValues t) {
+void SaAoRenderer::setGbColorBufferType(MrtBufferType::OptionValues t) {
 	gBuffer.setColorBufferType(t);
 }
 
-MrtBufferType::OptionValues SaAoIlRenderer::getGbColorBufferType() const {
+MrtBufferType::OptionValues SaAoRenderer::getGbColorBufferType() const {
 	return gBuffer.getColorBufferType();
 }
 
-void SaAoIlRenderer::setGbDepthBufferType(MrtBufferType::OptionValues t) {
+void SaAoRenderer::setGbDepthBufferType(MrtBufferType::OptionValues t) {
 	gBuffer.setDepthBufferType(t);
 }
 
-MrtBufferType::OptionValues SaAoIlRenderer::getGbDepthBufferType() const {
+MrtBufferType::OptionValues SaAoRenderer::getGbDepthBufferType() const {
 	return gBuffer.getDepthBufferType();
 }
-void SaAoIlRenderer::setAoColorBufferType(MrtBufferType::OptionValues t) {
+void SaAoRenderer::setAoColorBufferType(MrtBufferType::OptionValues t) {
 	aoBuffer.setColorBufferType(t);
 }
 
-MrtBufferType::OptionValues SaAoIlRenderer::getAoColorBufferType() const {
+MrtBufferType::OptionValues SaAoRenderer::getAoColorBufferType() const {
 	return aoBuffer.getColorBufferType();
 }
 
 
-void SaAoIlRenderer::reshape(int awinW, int awinH) {
+void SaAoRenderer::reshape(int awinW, int awinH) {
 	Renderer::reshape(awinW, awinH);
 	//if (awinW == 0) awinW++; 	if (awinH == 0) awinH++;
 
@@ -357,7 +367,7 @@ void SaAoIlRenderer::reshape(int awinW, int awinH) {
 	ssd.setScreenSize(awinW, awinH);
 }
 
-void SaAoIlRenderer::render(const Scene& scene) {
+void SaAoRenderer::render(const Scene& scene) {
 	//setScreenSpaceRayOrigin();
 	//setScreenSpaceEmisphereCenter();
 	///////////////////////////////////////////////////////////////////////////
@@ -417,12 +427,12 @@ void SaAoIlRenderer::render(const Scene& scene) {
 	}
 }
 
-void SaAoIlRenderer::setShowingGBuffer(bool enabled) {
+void SaAoRenderer::setShowingGBuffer(bool enabled) {
 	showingGBuffer = enabled;
 	showingAOBuffer = false;
 }
 
-void SaAoIlRenderer::showGBuffer() {
+void SaAoRenderer::showGBuffer() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	gBuffer.bindForReading();
 
@@ -435,18 +445,18 @@ void SaAoIlRenderer::showGBuffer() {
 
 
 	//up left
-	gBuffer.setReadBuffer(SaAoIlGBuffer::GBUFFER_TEXTURE_TYPE_DIRECTLIGHT);
+	gBuffer.setReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
     glBlitFramebuffer(0, 0, winW, winH,
                     0, offsetH, offsetW, winH,
 					GL_COLOR_BUFFER_BIT, GL_LINEAR);
 	//down left
-	gBuffer.setReadBuffer(SaAoIlGBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+	gBuffer.setReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
     glBlitFramebuffer(0, 0, winW, winH,
                     0, 0, offsetW, offsetH,
 					GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
 	//up mid
-	gBuffer.setReadBuffer(SaAoIlGBuffer::GBUFFER_TEXTURE_TYPE_ALBEDO);
+	gBuffer.setReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_SPECULAR);
     glBlitFramebuffer(0, 0, winW, winH,
                     offsetW, offsetH, offsetW2, winH,
 					GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -458,12 +468,12 @@ void SaAoIlRenderer::showGBuffer() {
 					GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 }
 
-void SaAoIlRenderer::setShowingAOBuffer(bool enabled) {
+void SaAoRenderer::setShowingAOBuffer(bool enabled) {
 	showingAOBuffer = enabled;
 	showingGBuffer = false;
 }
 
-void SaAoIlRenderer::showAOBuffer() {
+void SaAoRenderer::showAOBuffer() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	aoBuffer.bindForReading();
 
@@ -476,7 +486,7 @@ void SaAoIlRenderer::showAOBuffer() {
 
 
 /*
-void SaAoIlRenderer::setShowingArea(bool enabled) {
+void SaAoRenderer::setShowingArea(bool enabled) {
 	showingArea = enabled;
 	processingPassShader->use();
 	processingPassShader->setShowAreas(enabled);
@@ -485,19 +495,19 @@ void SaAoIlRenderer::setShowingArea(bool enabled) {
 	}
 }
 
-void SaAoIlRenderer::setShowingSampling(bool enabled) {
+void SaAoRenderer::setShowingSampling(bool enabled) {
 	showingSampling = enabled;
 	processingPassShader->use();
 	processingPassShader->setShowSampling(enabled);
 }
 
-void SaAoIlRenderer::setShowingSamplingDensity(bool enabled) {
+void SaAoRenderer::setShowingSamplingDensity(bool enabled) {
 	showingSamplingDensity = enabled;
 	processingPassShader->use();
 	processingPassShader->setShowSamplingDensity(enabled);
 }
 
-void SaAoIlRenderer::setShowingZoomedArea(bool enabled) {
+void SaAoRenderer::setShowingZoomedArea(bool enabled) {
 	showingZoomedArea = enabled;
 	processingPassShader->use();
 	processingPassShader->setShowZoomedArea(enabled);
@@ -505,83 +515,72 @@ void SaAoIlRenderer::setShowingZoomedArea(bool enabled) {
 
 */
 
-void SaAoIlRenderer::setAlbedoEnabled(bool enabled){
+void SaAoRenderer::setAlbedoEnabled(bool enabled){
 	albedoEnabled = enabled;
 	filteringPassShader->use(); filteringPassShader->setAlbedoEnabled(enabled);
 }
-void SaAoIlRenderer::setAoEnabled(bool enabled){
+void SaAoRenderer::setAoEnabled(bool enabled){
 	aoEnabled = enabled;
 	filteringPassShader->use(); filteringPassShader->setAoEnabled(enabled);
 }
-void SaAoIlRenderer::setIlEnabled(bool enabled){
-	ilEnabled = enabled;
-	filteringPassShader->use(); filteringPassShader->setIlEnabled(enabled);
-}
-void SaAoIlRenderer::setAmbientEnabled(bool enabled){
+
+void SaAoRenderer::setAmbientEnabled(bool enabled){
 	ambientLightEnabled = enabled;
 	filteringPassShader->use(); filteringPassShader->setAmbientEnabled(enabled);
 }
-void SaAoIlRenderer::setDirectEnabled(bool enabled){
+void SaAoRenderer::setDirectEnabled(bool enabled){
 	directLightEnabled = enabled;
 	filteringPassShader->use(); filteringPassShader->setDirectEnabled(enabled);
 }
 
 /////////////////////
-void SaAoIlRenderer::setAoSamplingRadius(float val) {
+void SaAoRenderer::setAoSamplingRadius(float val) {
 	aoSamplingRadius = val;
 
 	processingPassShader->use();
-	processingPassShader->setMaxSamplingRadius(val);
-
-	//if (samplingScopeId) setSTradLength(val);
+	processingPassShader->setMaxSamplingRadius(val);	
 }
 
-void SaAoIlRenderer::setAoAngleBias(float val) {
+void SaAoRenderer::setAoAngleBias(float val) {
 	aoAngleBias = val;
 	processingPassShader->use();
-	processingPassShader->setDiskDisplacement(val);
-
-	//if (samplingScopeId) setSTdiskDisplacement(val);
+	processingPassShader->setDiskDisplacement(val);	
 }
 
-void SaAoIlRenderer::setAoMaxDistance(float val) {
+void SaAoRenderer::setAoMaxDistance(float val) {
 	aoMaxDistance = val;
 	processingPassShader->use();
 	processingPassShader->setDistMax(val);
-
-	//if (samplingScopeId) setSTdistMax(val);
 }
 
-void SaAoIlRenderer::setAoNumSamples(int samples) {
+void SaAoRenderer::setAoNumSamples(int samples) {
 	aoNumSamples = samples;
 
 	processingPassShader->use();
 	processingPassShader->setNumSamples(samples/8);
-	setHemisphereSamplingMode(getHemisphereSamplingMode());
-	//if (samplingScopeId) setBSsamples(samples);
+	setHemisphereSamplingMode(getHemisphereSamplingMode());	
 }
 
 /////////////////////
-void SaAoIlRenderer::setAlchemyRO(float val) {
+
+void SaAoRenderer::setAlchemyRO(float val) {
 	alchemy_ro = val;
 	processingPassShader->use();
 	processingPassShader->setAlchemyRO(val);	
 }
-void SaAoIlRenderer::setAlchemyK(float val) {
+void SaAoRenderer::setAlchemyK(float val) {
 	alchemy_k = val;
 	processingPassShader->use();
 	processingPassShader->setAlchemyK(val);	
 }
 
-void SaAoIlRenderer::setAlchemyU(float val) {
+void SaAoRenderer::setAlchemyU(float val) {
 	alchemy_u = val;
 	processingPassShader->use();
 	processingPassShader->setAlchemyU(val);	
 }
 
-/////////////////////
-
-void SaAoIlRenderer::setHemisphereSamplingMode(HemisphereSampling::KernelMode_t samplingMode) {
+void SaAoRenderer::setHemisphereSamplingMode(HemisphereSampling::KernelMode_t samplingMode) {
 	bs_emisphereSamplingMode = samplingMode;
 
 	switch (samplingMode) {
@@ -604,7 +603,7 @@ void SaAoIlRenderer::setHemisphereSamplingMode(HemisphereSampling::KernelMode_t 
 };
 /////////////////////
 
-void SaAoIlRenderer::setSamplingPatternId(SamplingPatternShaderSub::OptionValues id) {
+void SaAoRenderer::setSamplingPatternId(SamplingPatternShaderSub::OptionValues id) {
 	samplingPatternId = id;
 	if (processingPassShader->isInitialized()) {
 		processingPassShader->use();
@@ -612,7 +611,7 @@ void SaAoIlRenderer::setSamplingPatternId(SamplingPatternShaderSub::OptionValues
 	}
 }
 
-void SaAoIlRenderer::setAoComputationId(D2DaoShaderSub::OptionValues id) {
+void SaAoRenderer::setAoComputationId(D2DaoShaderSub::OptionValues id) {
 	aoComputationId = id;
 	if (processingPassShader->isInitialized()) {
 		processingPassShader->use();
@@ -620,15 +619,7 @@ void SaAoIlRenderer::setAoComputationId(D2DaoShaderSub::OptionValues id) {
 	}
 }
 
-void SaAoIlRenderer::setIlComputationId(D2DilShaderSub::OptionValues id) {
-	ilComputationId = id;
-	if (processingPassShader->isInitialized()) {
-		processingPassShader->use();
-		processingPassShader->setIlCalculation(id);
-	}
-}
-
-void SaAoIlRenderer::setAreaComputationId(AreaCalculatorShaderSub::OptionValues id) {
+void SaAoRenderer::setAreaComputationId(AreaCalculatorShaderSub::OptionValues id) {
 	areaComputationId = id;
 	if (geometryPassShader->isInitialized()) {
 		geometryPassShader->use();
@@ -636,67 +627,63 @@ void SaAoIlRenderer::setAreaComputationId(AreaCalculatorShaderSub::OptionValues 
 	}
 }
 
-void SaAoIlRenderer::setNormalMapping(bool enabled) {
+void SaAoRenderer::setNormalMapping(bool enabled) {
 	Renderer::setNormalMapping(enabled);
 	geometryPassShader->use();
 	geometryPassShader->setNormalMapping(enabled);
 }
-void SaAoIlRenderer::setSpecularMapping(bool enabled) {
+void SaAoRenderer::setSpecularMapping(bool enabled) {
 	Renderer::setSpecularMapping(enabled);
 	geometryPassShader->use();
 	geometryPassShader->setSpecularMapping(enabled);
 }
-void SaAoIlRenderer::setOpacityMapping(bool enabled) {
+void SaAoRenderer::setOpacityMapping(bool enabled) {
 	Renderer::setOpacityMapping(enabled);
 	geometryPassShader->use();
 	geometryPassShader->setOpacityMapping(enabled);
 }
-void SaAoIlRenderer::setTextureMapping(bool enabled) {
+void SaAoRenderer::setTextureMapping(bool enabled) {
 	Renderer::setTextureMapping(enabled);
 	geometryPassShader->use();
 	geometryPassShader->setTextureMapping(enabled);
 }
-void SaAoIlRenderer::setAoMultiplier(float m) {
+void SaAoRenderer::setAoMultiplier(float m) {
 	aoMultiplier = m;
 	processingPassShader->use();
 	processingPassShader->setAoMultiplier(m);
 }
-void SaAoIlRenderer::setIlMultiplier(float m) {
-	ilMultiplier = m;
-	processingPassShader->use();
-	processingPassShader->setIlMultiplier(m);
-}
-void SaAoIlRenderer::setAreaMultiplier(float m) {
+
+void SaAoRenderer::setAreaMultiplier(float m) {
 	areaMultiplier = m;
 	processingPassShader->use();
 	processingPassShader->setAreaMultiplier(m);
 }
-void SaAoIlRenderer::setSolidAngleMultiplier(float m) {
+void SaAoRenderer::setSolidAngleMultiplier(float m) {
 	solidAngleMultiplier = m;
 	processingPassShader->use();
 	processingPassShader->setSolidAngleMultiplier(m);
 }
 ///////////////////////////////////////////////////////////////////////////
 
-void SaAoIlRenderer::setBlurKernelSize(int s) {
+void SaAoRenderer::setBlurKernelSize(int s) {
 	blurKernelSize = s;
 	filteringPassShader->use();
 	filteringPassShader->setKernelSize(s);
 }
 
-void SaAoIlRenderer::setBlurKnormal(float kn) {
+void SaAoRenderer::setBlurKnormal(float kn) {
 	blurKnormal = kn;
 	filteringPassShader->use();
 	filteringPassShader->setKnormal(kn);
 }
 
-void SaAoIlRenderer::setBlurKdepth(float kd) {
+void SaAoRenderer::setBlurKdepth(float kd) {
 	blurKdepth = kd;
 	filteringPassShader->use();
 	filteringPassShader->setKnormal(kd);
 }
 
-void SaAoIlRenderer::setBlurEnabled(bool enabled) {
+void SaAoRenderer::setBlurEnabled(bool enabled) {
 	blurEnabled = enabled;
 	filteringPassShader->use();
 	filteringPassShader->setBlurEnabled(enabled);

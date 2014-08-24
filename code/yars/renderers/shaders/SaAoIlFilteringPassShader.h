@@ -3,7 +3,7 @@
 
 #include "../../ShaderHandling.h"
 
-#include "../gdlBuffer.h"
+#include "../def_saaoil/gdlBuffer.h"
 #include "../aoBuffer.h"
 
 class SaAoIlFilteringPassShader : public GfxShaderProgram {

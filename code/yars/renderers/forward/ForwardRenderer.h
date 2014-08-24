@@ -1,7 +1,7 @@
 #ifndef FORWARDRENDERER_H
 #define FORWARDRENDERER_H
 
-#include "../Renderer.h"
+#include "../../Renderer.h"
 
 class ForwardShader;
 class ForwardShaderFlat;

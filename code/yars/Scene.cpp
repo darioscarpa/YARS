@@ -8,11 +8,12 @@
 #include "CameraNode.h"
 #include "FpsCameraNode.h"
 #include "Renderer.h"
-#include "renderers/DoublePassBlendingDeferredRenderer.h"
-#include "renderers/DeferredRenderer.h"
 
-#include "renderers/SaAoRenderer.h"
-#include "renderers/SaAoIlRenderer.h"
+#include "renderers/deferred/DoublePassBlendingDeferredRenderer.h"
+#include "renderers/deferred/DeferredRenderer.h"
+
+#include "renderers/def_saao/SaAoRenderer.h"
+#include "renderers/def_saaoil/SaAoIlRenderer.h"
 
 #include "renderers/shaders/sub/SamplingPatternShaderSub.h"
 

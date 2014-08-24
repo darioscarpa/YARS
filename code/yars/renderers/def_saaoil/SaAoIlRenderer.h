@@ -1,27 +1,27 @@
-#ifndef SAAORENDERER_H
-#define SAAORENDERER_H
+#ifndef SAAOILRENDERER_H
+#define SAAOILRENDERER_H
 
-#include "SaAoGbuffer.h"
-#include "aoBuffer.h"
+#include "SaAoIlGbuffer.h"
+#include "../aoBuffer.h"
 
-#include "MrtBuffer.h"
+#include "../MrtBuffer.h"
 
-#include "../Renderer.h"
-#include "../ShaderHandling.h"
+#include "../../Renderer.h"
+#include "../../ShaderHandling.h"
 
-#include "HemisphereSampling.h"
+#include "../HemisphereSampling.h"
 
-#include "shaders/SaAoGeometryPassShader.h"
-#include "shaders/SaAoProcessingPassShader.h"
-#include "shaders/SaAoFilteringPassShader.h"
+#include "../shaders/SaAoIlGeometryPassShader.h"
+#include "../shaders/SaAoIlProcessingPassShader.h"
+#include "../shaders/SaAoIlFilteringPassShader.h"
 
 class FullScreenQuad;
 
-class SaAoRenderer : public Renderer {
+class SaAoIlRenderer : public Renderer {
 	public:
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 
-		SaAoRenderer();
+		SaAoIlRenderer();
 
 		void reshape(int awinW, int awinH);
 		void render(const Scene& scene);
@@ -34,8 +34,8 @@ class SaAoRenderer : public Renderer {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 
-		virtual void initMrtBuffers(int awinW, int awinH);
-		virtual void initShaderPrograms();
+		//void initMrtBuffers(int awinW, int awinH);
+		//void initShaderPrograms();
 		
 		// hemisphere sampling ////////////////////////////////////////////////////////////////////
 		void setHemisphereSamplingMode(HemisphereSampling::KernelMode_t samplingMode);
@@ -98,8 +98,8 @@ class SaAoRenderer : public Renderer {
 		void setScreenSpaceRayOrigin();
 		void setScreenSpaceEmisphereCenter();
 		
-		void setTechnique(SaAoProcessingPassShader::Technique_t t);
-		SaAoProcessingPassShader::Technique_t getTechnique() const { return m_technique; };				
+		void setTechnique(SaAoIlProcessingPassShader::Technique_t t);
+		SaAoIlProcessingPassShader::Technique_t getTechnique() const { return m_technique; };				
 				
 		inline SamplingPatternShaderSub::OptionValues getSamplingPatternId() const { return samplingPatternId;  };
 		void   setSamplingPatternId(SamplingPatternShaderSub::OptionValues id);
@@ -107,17 +107,22 @@ class SaAoRenderer : public Renderer {
 		inline D2DaoShaderSub::OptionValues getAoComputationId() const { return aoComputationId;  };
 		void   setAoComputationId(D2DaoShaderSub::OptionValues id);		
 		
+		inline D2DilShaderSub::OptionValues getIlComputationId() const { return ilComputationId;  };
+		void   setIlComputationId(D2DilShaderSub::OptionValues id);		
+		
 		////////////////////////////////////////////////////////////////////////////
 		
 		////////////////////////////////////////////////////////////////////////////
 		// generic AO params
 		void setAoMultiplier(float m);
+		void setIlMultiplier(float m);
 		void setAoSamplingRadius(float val);
 		void setAoAngleBias(float val);
 		void setAoMaxDistance(float val);
 		void setAoNumSamples(int samples);
 
 		inline float getAoMultiplier()     const { return aoMultiplier;   }
+		inline float getIlMultiplier()   const   { return ilMultiplier;   }
 		inline float getAoSamplingRadius() const { return aoSamplingRadius; };
 		inline float getAoAngleBias()      const { return aoAngleBias;      };
 		inline float getAoMaxDistance()    const { return aoMaxDistance;    };
@@ -158,6 +163,9 @@ class SaAoRenderer : public Renderer {
 		void setAoEnabled(bool enabled);
 		inline bool isAoEnabled() const  { return aoEnabled; };
 
+		void setIlEnabled(bool enabled);
+		inline bool isIlEnabled() const  { return ilEnabled; };
+
 		void setAmbientEnabled(bool enabled);
 		inline bool isAmbientEnabled() const  { return ambientLightEnabled; };
 
@@ -188,9 +196,9 @@ class SaAoRenderer : public Renderer {
 		Shader::compConstMap_t      shadersCompileConstants;
 
 		
-		SaAoGeometryPassShader        *geometryPassShader;
-		SaAoProcessingPassShader      *processingPassShader;
-		SaAoFilteringPassShader       *filteringPassShader;
+		SaAoIlGeometryPassShader        *geometryPassShader;
+		SaAoIlProcessingPassShader      *processingPassShader;
+		SaAoIlFilteringPassShader       *filteringPassShader;
 		
 
 		/*
@@ -199,7 +207,7 @@ class SaAoRenderer : public Renderer {
 		GfxShaderProgram *filteringPassShader;
 		*/
 				
-		SaAoProcessingPassShader::Technique_t m_technique;
+		SaAoIlProcessingPassShader::Technique_t m_technique;
 	
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		// MRT buffers
@@ -215,9 +223,11 @@ class SaAoRenderer : public Renderer {
 		float aoSamplingRadius;
 		float aoAngleBias;
 		float aoMaxDistance;					
-		float aoMultiplier;				
+		float aoMultiplier;	
+		float ilMultiplier;
 
 		D2DaoShaderSub::OptionValues            aoComputationId;		
+		D2DilShaderSub::OptionValues            ilComputationId;
 		SamplingPatternShaderSub::OptionValues  samplingPatternId;		
 
 		//emisphere sampling settings
@@ -263,6 +273,7 @@ class SaAoRenderer : public Renderer {
 		bool aoEnabled;
 		bool ambientLightEnabled;
 		bool directLightEnabled;
+		bool ilEnabled;
 };
 
 #endif
