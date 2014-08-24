@@ -3,22 +3,22 @@
 
 ---
 
-YARS is a simple, *dirty*, unfinished rendering sandbox I developed while working on my
+YARS is a simple, **dirty**, unfinished rendering sandbox I developed while working on my
 master thesis.
 In its current status, it shouldn't probably used by anyone, except maybe some OpenGL
 beginner (as I consider myself).
 
-YARS is written in *C++11* and *OpenGL 4.3* with no interest for backward compatibility,
+YARS is written in **C++11** and **OpenGL 4.3** with no interest for backward compatibility,
 aiming at CG experimentation.
 
 ---
 
 ### FEATURES
 
-YARS allow you to setup different *scenes* and *renderers*, and to select them at runtime
+YARS allow you to setup different **scenes** and **renderers**, and to select them at runtime
 (useful to compare different techniques and to profile them).
 
-Scenes are made of asset/camera/light *nodes*, and can be built interactively by adding
+Scenes are made of asset/camera/light **nodes**, and can be built interactively by adding
 nodes and setting up their properties through the GUI. Unfortunately, the GUI is
 currently quite confusing, because it was mainly built day after day by adding only
 what I needed and in the fastest way I could find. 
@@ -40,7 +40,7 @@ Some additional information is available in my thesis.
 
 --- 
 
-BUILD INSTRUCTIONS
+### BUILD INSTRUCTIONS
 
 The provided VS2013 solution file expects some libraries in an "external" directory 
 at the same level of the "yars" directory:
@@ -61,7 +61,7 @@ at the same level of the "yars" directory:
 
 ---
 
-UPDATE LOG
+### UPDATE LOG
 
 2014-08-17 update:
 Unfortunately, I keep being unable to properly refactor the code as I expected, 
