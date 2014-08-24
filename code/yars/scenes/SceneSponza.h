@@ -1,11 +1,11 @@
 #ifndef SCENESPONZA_H
 #define SCENESPONZA_H
 
-#include "Scene.h"
+#include "../Scene.h"
 
-#include "Asset.h"
+#include "../Asset.h"
 
-#include "util/Spline.h"
+#include "../util/Spline.h"
 
 class SceneSponza : public Scene {
 public:

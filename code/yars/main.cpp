@@ -6,8 +6,8 @@
 #include "renderers/SaAoRenderer.h"
 #include "renderers/SaAoIlRenderer.h"
 
-#include "SceneSponza.h"
-#include "SceneRubik.h"
+#include "scenes/SceneSponza.h"
+#include "scenes/SceneRubik.h"
 
 // OPENGL
 #include "util/inc_opengl.h"

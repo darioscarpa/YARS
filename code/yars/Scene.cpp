@@ -17,7 +17,7 @@
 #include "renderers/shaders/sub/SamplingPatternShaderSub.h"
 
 
-#include "SceneSponza.h"
+#include "scenes/SceneSponza.h"
 
 #include "gui/Gui.h"
 

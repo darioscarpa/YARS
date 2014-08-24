@@ -1,8 +1,8 @@
 #include "SceneRubik.h"
 
-#include "Sandbox.h"
+#include "../Sandbox.h"
 
-#include "FpsCameraNode.h"
+#include "../FpsCameraNode.h"
 
 SceneRubik::SceneRubik() : Scene(){	
 	setLabel("rubik");

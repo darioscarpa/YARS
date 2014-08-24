@@ -1,17 +1,17 @@
 #include "SceneSponza.h"
 
-#include "Sandbox.h"
+#include "../Sandbox.h"
 
-#include "AnimatedAsset.h"
-#include "Asset.h"
-#include "AssetNode.h"
+#include "../AnimatedAsset.h"
+#include "../Asset.h"
+#include "../AssetNode.h"
 
-#include "CameraNode.h"
-#include "FpsCameraNode.h"
+#include "../CameraNode.h"
+#include "../FpsCameraNode.h"
 
-#include "LightNode.h"
+#include "../LightNode.h"
 
-#include "Renderer.h"
+#include "../Renderer.h"
 
 #include <algorithm>
 
@@ -134,7 +134,6 @@ void SceneSponza::setup() {
 
 	LightNode *pl1 = new LightNode("pointLight1");
 	pl1->setPosition(glm::vec3(0.0f, 0.0f, 4.0f));
-	//pl1->setColor(glm::vec3(0.0f, 0.7f, 0.0f));
 	pl1->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 	addLightNode(pl1);
 
@@ -161,7 +160,6 @@ void SceneSponza::setup() {
 
 	//fireLight->attach(Msphere);
 	//addNode(fireLight);
-
 }
 
 void SceneSponza::shootLightBullet() {
@@ -175,7 +173,6 @@ void SceneSponza::shootLightBullet() {
 	nBullet->setScaling(glm::vec3(0.05, 0.05, 0.05));
 	
 	addAssetNode(nBullet);
-	//addNode(nBullet);
 	bullets->push_back(nBullet);
 
 	bulletLight->setPosition(cc->getPosition());
@@ -196,7 +193,7 @@ void SceneSponza::updateLightBullets(float dist) {
 	static const float MAXBULLETDIST = 100.0f;
 
 	//bullets->erase( std::remove_if(bullets->begin(), bullets->end(), bullet_is_too_far),
-//						bullets->end() ); 
+	// 				  bullets->end() ); 
 	
 	for(std::vector<SceneNode*>::const_iterator it = bullets->begin();
 		it != bullets->end();
@@ -218,17 +215,13 @@ void SceneSponza::updateLightBullets(float dist) {
 		}
 		bullets->pop_back();
 		remNode(deletable);		
-	}
-
-	//remNode
-	//bullets->erase(deletable);
+	}	
 }
 
 
 void SceneSponza::update(Input * input, float deltaTime) {
 	Scene::update(input, deltaTime);
 	updateLightBullets( deltaTime );	
-	//updateLightBullets( deltaTime/30.0f );	
 
 	//float yellow = 120.0f + (rand()%30);
 	//fireLight->setColor(glm::vec3(1.0f, yellow/255.0f, 0.0f));	

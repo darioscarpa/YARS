@@ -1,9 +1,9 @@
 #ifndef SCENERUBIK_H
 #define SCENERUBIK_H
 
-#include "Scene.h"
+#include "../Scene.h"
 
-#include "Asset.h"
+#include "../Asset.h"
 
 class SceneRubik : public Scene {
 public:
