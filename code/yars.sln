@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yars", "yars\yars.vcxproj", "{69B1A8EC-9B84-4354-9D84-326318BC56B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D2BEEF3-33D3-44DC-9B34-37F1CB363750}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69B1A8EC-9B84-4354-9D84-326318BC56B4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{69B1A8EC-9B84-4354-9D84-326318BC56B4}.Debug|Win32.Build.0 = Debug|Win32
+		{69B1A8EC-9B84-4354-9D84-326318BC56B4}.Release|Win32.ActiveCfg = Release|Win32
+		{69B1A8EC-9B84-4354-9D84-326318BC56B4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

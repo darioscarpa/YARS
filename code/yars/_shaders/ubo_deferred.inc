@@ -1,0 +1,14 @@
+#ifndef UBO_DEFERRED_INC
+#define UBO_DEFERRED_INC
+
+//////////////////////////////////////////////////////////////////
+
+layout (std140) uniform Deferred {
+	vec2  screenSize;
+	vec2  invScreenSize;
+	//float aspectRatio;
+	//float invAspectRatio;
+};
+
+//////////////////////////////////////////////////////////////////
+#endif

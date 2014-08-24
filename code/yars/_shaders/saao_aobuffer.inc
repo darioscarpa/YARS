@@ -1,0 +1,18 @@
+#ifndef SAAO_AOBUFFER_INC
+#define SAAO_AOBUFFER_INC
+
+//////////////////////////////////////////////////////////////////
+
+uniform	sampler2D aoSampler;
+
+/// AOBUFFER data access/unpacking /////////////////////
+
+float aoBufGetOcclusion(const in vec2 coords) {
+	return texture(aoSampler, coords).r;
+}
+//////////////////////////////////////////////////////////////////
+void aoBufFetchOcclusion(const in vec2 coords, inout float ao) {
+	ao = texture(aoSampler, coords).r;
+}
+//////////////////////////////////////////////////////////////////
+#endif

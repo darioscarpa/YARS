@@ -1,0 +1,1 @@
+Screenshots are saved to this directory

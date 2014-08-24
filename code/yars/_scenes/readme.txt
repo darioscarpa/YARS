@@ -1,0 +1,1 @@
+Scenes are saved/loaded to/from JSON files into this directory

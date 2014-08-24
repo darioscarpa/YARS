@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSponza.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderHandling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderSharedData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sandbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\GuiBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\DeferredRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\ForwardRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\FullScreenQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util\vsGLInfoLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSerialization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\DoublePassBlendingDeferredRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRubik.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\ConfigurableRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\OptimizedRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\MrtBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\SaAoRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\SaAoIlRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\HemisphereSampling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSponza.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCameraNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderHandling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderSharedData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sandbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarAssetNodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\DeferredRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\ForwardRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\gBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\FullScreenQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\vsGLInfoLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarCameraNodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarLightNodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarSandbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSerialization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Spline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraPath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\GuiBarCameraPaths.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraPathWalker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\inc_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\inc_opengl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedAsset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedAssetNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\DoublePassBlendingDeferredRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRubik.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\ConfigurableRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\gdlBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\string_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\CRgeometryPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\CRprocessingPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\D2DaoShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\D2DilShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRblendingPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRdirectLightPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRdiscDSSAOshader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRgeometryPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRindirectLightPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRlightPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRlightPassShaderDirLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRlightPassShaderPointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRlightPassShaderSpotLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\DRsamplingTestPasssShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\ForwardShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\ForwardShaderFlat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\OcclusionComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SamplingPatternShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\RandomGeneratorShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\sub\AreaCalculatorShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\sub\D2DaoShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\sub\D2DilShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\sub\RandomGeneratorShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\sub\SamplingPatternShaderSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\aoBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\BlurPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\OptimizedRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\ORprocessingPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\MrtBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\DlBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\SaAoRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoProcessingPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoGeometryPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoFilteringPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoIlFilteringPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoIlGeometryPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\shaders\SaAoIlProcessingPassShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\SaAoIlRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\HemisphereSampling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\SaAoGbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\SaAoIlGbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="renderers\deferred_lightpass_pointlight.vert" />
+    <None Include="renderers\deferred.frag" />
+    <None Include="renderers\deferred.geom" />
+    <None Include="renderers\deferred.vert" />
+    <None Include="renderers\deferred_lightpass.frag" />
+    <None Include="renderers\deferred_lightpass.vert" />
+    <None Include="renderers\deferred_lightpass_pointlight.frag" />
+    <None Include="renderers\forward.frag" />
+    <None Include="renderers\forward.vert" />
+    <None Include="_shaders\forward_flat.frag" />
+    <None Include="_shaders\forward.vert" />
+    <None Include="_shaders\deferred.frag" />
+    <None Include="_shaders\deferred.geom" />
+    <None Include="_shaders\deferred.vert" />
+    <None Include="_shaders\deferred_lightpass.frag" />
+    <None Include="_shaders\deferred_lightpass_pointlight.frag" />
+    <None Include="_shaders\forward.frag" />
+    <None Include="_shaders\lighting.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\ubo_matrices.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\ubo_lights.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\ubo_materials.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\noise.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\random.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_indirectlightpass.frag" />
+    <None Include="_shaders\sampling.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\gbuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_samplingtestpass.frag" />
+    <None Include="_shaders\deferred_discDSSAOpass.frag" />
+    <None Include="_shaders\indirectLighting.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\ambientOcclusion.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_fullscreenquad.vert" />
+    <None Include="_shaders\deferred_lightpass_spotlight.frag" />
+    <None Include="_shaders\deferred_lightpass_dirlight.frag" />
+    <None Include="_shaders\ubo_deferred.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_directlightpass.frag" />
+    <None Include="_shaders\deferred_blending.frag" />
+    <None Include="_shaders\dlbuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\draw.inc" />
+    <None Include="_shaders\pyramid.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_randomPyramidStopAtK.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_randomStopAtK.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_randomTriangleSkip.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_triangleSkip.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_triangleStopAtK.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\formulas.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\deferred_blending_dsso.inc" />
+    <None Include="_shaders\c_buildgdlbuf.frag" />
+    <None Include="_shaders\c_buildgdlbuf.geom" />
+    <None Include="_shaders\subroutinesConfig.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\gdlbuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\c_processgdlbuf.frag" />
+    <None Include="_shaders\deferred_lighting.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\blur.frag">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\aobuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\o_processgdlbuf.frag" />
+    <None Include="_shaders\saao_filteringPass.frag" />
+    <None Include="_shaders\saao_geometryPass.frag" />
+    <None Include="_shaders\saao_geometryPass.geom" />
+    <None Include="_shaders\saao_processingPass.frag" />
+    <None Include="_shaders\formulas_triangle.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\saaoil_filteringPass.frag" />
+    <None Include="_shaders\saaoil_geometryPass.frag" />
+    <None Include="_shaders\saaoil_processingPass.frag" />
+    <None Include="_shaders\saao_aobuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\saaoil_ilaobuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\saao_gbuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\saaoil_gbuffer.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="_shaders\utils.inc">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{69B1A8EC-9B84-4354-9D84-326318BC56B4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>yars</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\external\rapidjson\include;..\external\AntTweakBar\include;..\external\DevIL-SDK-x86-1.7.8-minimal\include;..\external\assimp-github-minimal\include;..\external\glm-0.9.5.2-minimal\include;..\external\glew-1.10.0-minimal\include;..\external\glfw-2.7.9-minimal\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\external\AntTweakBar\lib;..\external\assimp-github-minimal\lib;..\external\DevIL-SDK-x86-1.7.8-minimal\lib;..\external\glew-1.10.0-minimal\lib\Release\;..\external\glfw-2.7.9-minimal\lib\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AntTweakBar.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;GLFW.lib;glu32.lib;opengl32.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\external\rapidjson\include;..\external\AntTweakBar\include;..\external\assimp-github-minimal\include;..\external\DevIL-SDK-x86-1.7.8-minimal\include;..\external\glm-0.9.5.2-minimal\include;..\external\glew-1.10.0-minimal\include;..\external\glfw-2.7.9-minimal\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\external\AntTweakBar\lib;..\external\assimp-github-minimal\lib;..\external\DevIL-SDK-x86-1.7.8-minimal\lib;..\external\glew-1.10.0-minimal\lib\Release;..\external\glfw-2.7.9-minimal\lib\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AntTweakBar.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;GLFW.lib;glu32.lib;opengl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimatedAsset.cpp" />
+    <ClCompile Include="Asset.cpp" />
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="renderers\MrtBuffer.cpp" />
+    <ClCompile Include="Profiler.cpp" />
+    <ClCompile Include="renderers\DeferredRenderer.cpp" />
+    <ClCompile Include="renderers\DoublePassBlendingDeferredRenderer.cpp" />
+    <ClCompile Include="renderers\ForwardRenderer.cpp" />
+    <ClCompile Include="renderers\FullScreenQuad.cpp" />
+    <ClCompile Include="gui\Gui.cpp" />
+    <ClCompile Include="gui\GuiBar.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="renderers\HemisphereSampling.cpp" />
+    <ClCompile Include="renderers\SaAoIlRenderer.cpp" />
+    <ClCompile Include="renderers\SaAoRenderer.cpp" />
+    <ClCompile Include="RenderWindow.cpp" />
+    <ClCompile Include="Sandbox.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneRubik.cpp" />
+    <ClCompile Include="SceneSerialization.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="SceneSponza.cpp" />
+    <ClCompile Include="ShaderHandling.cpp" />
+    <ClCompile Include="ShaderSharedData.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="util\vsGLInfoLib.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnimatedAsset.h" />
+    <ClInclude Include="AnimatedAssetNode.h" />
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="AssetNode.h" />
+    <ClInclude Include="CameraNode.h" />
+    <ClInclude Include="CameraPathWalker.h" />
+    <ClInclude Include="gui\GuiBarCameraNodes.h" />
+    <ClInclude Include="gui\GuiBarCameraPaths.h" />
+    <ClInclude Include="gui\GuiBarLightNodes.h" />
+    <ClInclude Include="gui\GuiBarRenderer.h" />
+    <ClInclude Include="gui\GuiBarSandbox.h" />
+    <ClInclude Include="gui\GuiBarScene.h" />
+    <ClInclude Include="gui\GuiBarStatus.h" />
+    <ClInclude Include="renderers\MrtBuffer.h" />
+    <ClInclude Include="Profiler.h" />
+    <ClInclude Include="renderers\aoBuffer.h" />
+    <ClInclude Include="renderers\SaAoGbuffer.h" />
+    <ClInclude Include="renderers\SaAoIlGbuffer.h" />
+    <ClInclude Include="renderers\SaAoIlRenderer.h" />
+    <ClInclude Include="renderers\SaAoRenderer.h" />
+    <ClInclude Include="renderers\shaders\CRgeometryPassShader.h" />
+    <ClInclude Include="renderers\shaders\CRprocessingPassShader.h" />
+    <ClInclude Include="renderers\shaders\D2DaoShaderSub.h" />
+    <ClInclude Include="renderers\shaders\D2DilShaderSub.h" />
+    <ClInclude Include="renderers\DeferredRenderer.h" />
+    <ClInclude Include="renderers\DlBuffer.h" />
+    <ClInclude Include="renderers\DoublePassBlendingDeferredRenderer.h" />
+    <ClInclude Include="renderers\shaders\DRblendingPassShader.h" />
+    <ClInclude Include="renderers\shaders\DRdirectLightPassShader.h" />
+    <ClInclude Include="renderers\shaders\DRdiscDSSAOshader.h" />
+    <ClInclude Include="renderers\shaders\DRgeometryPassShader.h" />
+    <ClInclude Include="renderers\shaders\DRindirectLightPassShader.h" />
+    <ClInclude Include="renderers\shaders\DRlightPassShader.h" />
+    <ClInclude Include="renderers\shaders\DRlightPassShaderDirLight.h" />
+    <ClInclude Include="renderers\shaders\DRlightPassShaderPointLight.h" />
+    <ClInclude Include="renderers\shaders\DRlightPassShaderSpotLight.h" />
+    <ClInclude Include="renderers\shaders\DRsamplingTestPasssShader.h" />
+    <ClInclude Include="renderers\HemisphereSampling.h" />
+    <ClInclude Include="renderers\ForwardRenderer.h" />
+    <ClInclude Include="renderers\shaders\ForwardShader.h" />
+    <ClInclude Include="FpsCameraNode.h" />
+    <ClInclude Include="renderers\shaders\ForwardShaderFlat.h" />
+    <ClInclude Include="renderers\FullScreenQuad.h" />
+    <ClInclude Include="renderers\gBuffer.h" />
+    <ClInclude Include="gui\Gui.h" />
+    <ClInclude Include="gui\GuiBar.h" />
+    <ClInclude Include="gui\GuiBarAssetNodes.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="LightNode.h" />
+    <ClInclude Include="renderers\gdlBuffer.h" />
+    <ClInclude Include="renderers\shaders\OcclusionComputeShader.h" />
+    <ClInclude Include="renderers\shaders\ORprocessingPassShader.h" />
+    <ClInclude Include="renderers\shaders\RandomGeneratorShaderSub.h" />
+    <ClInclude Include="renderers\shaders\SaAoFilteringPassShader.h" />
+    <ClInclude Include="renderers\shaders\SaAoGeometryPassShader.h" />
+    <ClInclude Include="renderers\shaders\SaAoIlFilteringPassShader.h" />
+    <ClInclude Include="renderers\shaders\SaAoIlGeometryPassShader.h" />
+    <ClInclude Include="renderers\shaders\SaAoIlProcessingPassShader.h" />
+    <ClInclude Include="renderers\shaders\SaAoProcessingPassShader.h" />
+    <ClInclude Include="renderers\shaders\SamplingPatternShaderSub.h" />
+    <ClInclude Include="renderers\shaders\BlurPassShader.h" />
+    <ClInclude Include="renderers\shaders\sub\AreaCalculatorShaderSub.h" />
+    <ClInclude Include="renderers\shaders\sub\D2DaoShaderSub.h" />
+    <ClInclude Include="renderers\shaders\sub\D2DilShaderSub.h" />
+    <ClInclude Include="renderers\shaders\sub\RandomGeneratorShaderSub.h" />
+    <ClInclude Include="renderers\shaders\sub\SamplingPatternShaderSub.h" />
+    <ClInclude Include="RenderWindow.h" />
+    <ClInclude Include="Sandbox.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneRubik.h" />
+    <ClInclude Include="SceneSerialization.h" />
+    <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SceneSponza.h" />
+    <ClInclude Include="ShaderHandling.h" />
+    <ClInclude Include="ShaderSharedData.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="CameraPath.h" />
+    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="util\inc_glfw.h" />
+    <ClInclude Include="util\inc_math.h" />
+    <ClInclude Include="util\inc_opengl.h" />
+    <ClInclude Include="util\io_utils.h" />
+    <ClInclude Include="util\Spline.h" />
+    <ClInclude Include="util\string_utils.h" />
+    <ClInclude Include="util\vsGLInfoLib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="renderers\deferred.frag" />
+    <None Include="renderers\deferred.geom" />
+    <None Include="renderers\deferred.vert" />
+    <None Include="renderers\deferred_lightpass.frag" />
+    <None Include="renderers\deferred_lightpass.vert" />
+    <None Include="renderers\deferred_lightpass_pointlight.frag" />
+    <None Include="renderers\deferred_lightpass_pointlight.vert" />
+    <None Include="renderers\forward.frag" />
+    <None Include="renderers\forward.vert" />
+    <None Include="_shaders\ambientOcclusion.inc" />
+    <None Include="_shaders\aobuffer.inc" />
+    <None Include="_shaders\blur.frag" />
+    <None Include="_shaders\c_buildgdlbuf.frag" />
+    <None Include="_shaders\c_buildgdlbuf.geom" />
+    <None Include="_shaders\c_processgdlbuf.frag" />
+    <None Include="_shaders\deferred.frag" />
+    <None Include="_shaders\deferred.geom" />
+    <None Include="_shaders\deferred.vert" />
+    <None Include="_shaders\deferred_blending.frag" />
+    <None Include="_shaders\deferred_blending_randomPyramidStopAtK.inc" />
+    <None Include="_shaders\deferred_blending_randomStopAtK.inc" />
+    <None Include="_shaders\deferred_blending_randomTriangleSkip.inc" />
+    <None Include="_shaders\deferred_blending_dsso.inc" />
+    <None Include="_shaders\deferred_blending_triangleSkip.inc" />
+    <None Include="_shaders\deferred_blending_triangleStopAtK.inc" />
+    <None Include="_shaders\deferred_directlightpass.frag" />
+    <None Include="_shaders\deferred_discDSSAOpass.frag" />
+    <None Include="_shaders\deferred_fullscreenquad.vert" />
+    <None Include="_shaders\deferred_indirectlightpass.frag" />
+    <None Include="_shaders\deferred_lighting.inc" />
+    <None Include="_shaders\deferred_lightpass.frag" />
+    <None Include="_shaders\deferred_lightpass_dirlight.frag" />
+    <None Include="_shaders\deferred_lightpass_pointlight.frag" />
+    <None Include="_shaders\deferred_lightpass_spotlight.frag" />
+    <None Include="_shaders\deferred_samplingtestpass.frag" />
+    <None Include="_shaders\dlbuffer.inc" />
+    <None Include="_shaders\draw.inc" />
+    <None Include="_shaders\formulas.inc" />
+    <None Include="_shaders\formulas_triangle.inc" />
+    <None Include="_shaders\forward.frag" />
+    <None Include="_shaders\forward.vert" />
+    <None Include="_shaders\forward_flat.frag" />
+    <None Include="_shaders\gbuffer.inc" />
+    <None Include="_shaders\gdlbuffer.inc" />
+    <None Include="_shaders\indirectLighting.inc" />
+    <None Include="_shaders\lighting.inc" />
+    <None Include="_shaders\noise.inc" />
+    <None Include="_shaders\o_processgdlbuf.frag" />
+    <None Include="_shaders\pyramid.inc" />
+    <None Include="_shaders\random.inc" />
+    <None Include="_shaders\saaoil_filteringPass.frag" />
+    <None Include="_shaders\saaoil_gbuffer.inc" />
+    <None Include="_shaders\saaoil_geometryPass.frag" />
+    <None Include="_shaders\saaoil_ilaobuffer.inc" />
+    <None Include="_shaders\saaoil_processingPass.frag" />
+    <None Include="_shaders\saao_aobuffer.inc" />
+    <None Include="_shaders\saao_filteringPass.frag" />
+    <None Include="_shaders\saao_gbuffer.inc" />
+    <None Include="_shaders\saao_geometryPass.frag" />
+    <None Include="_shaders\saao_geometryPass.geom" />
+    <None Include="_shaders\saao_processingPass.frag" />
+    <None Include="_shaders\sampling.inc" />
+    <None Include="_shaders\subroutinesConfig.inc" />
+    <None Include="_shaders\ubo_deferred.inc" />
+    <None Include="_shaders\ubo_lights.inc" />
+    <None Include="_shaders\ubo_materials.inc" />
+    <None Include="_shaders\ubo_matrices.inc" />
+    <None Include="_shaders\utils.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
